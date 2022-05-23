@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+chan DoPeriodic, DoAperiodic,  SwitchAP2P, SwitchP2AP, NochPeriodic;</declaration>
+	<template>
+		<name x="5" y="5">Task</name>
+		<declaration>// Place local declarations here.</declaration>
+		<location id="id0" x="144" y="-136">
+			<name x="127" y="-170">start</name>
+		</location>
+		<location id="id1" x="-102" y="0">
+			<name x="-221" y="-17">Periodic_Task</name>
+		</location>
+		<location id="id2" x="374" y="8">
+			<name x="417" y="0">Aperiodic_Task</name>
+		</location>
+		<init ref="id0"/>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="-467" y="-34">NochPeriodic!</label>
+			<nail x="-365" y="-144"/>
+			<nail x="-365" y="110"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="93" y="212">SwitchP2AP!</label>
+			<nail x="34" y="204"/>
+			<nail x="221" y="204"/>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="76" y="-17">SwitchAP2P!</label>
+		</transition>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="-84" y="-85">DoPeriodic!</label>
+		</transition>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="289" y="-85">DoAperiodic!</label>
+		</transition>
+	</template>
+	<template>
+		<name>Mode</name>
+		<location id="id3" x="17" y="-178">
+			<name x="7" y="-212">Active</name>
+		</location>
+		<location id="id4" x="-416" y="-161">
+			<name x="-426" y="-195">Idle</name>
+		</location>
+		<init ref="id4"/>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id4"/>
+			<label kind="synchronisation" x="-238" y="-51">SwitchAP2P?</label>
+			<nail x="-68" y="-59"/>
+			<nail x="-306" y="-59"/>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id3"/>
+			<label kind="synchronisation" x="-255" y="-289">SwitchP2AP?</label>
+			<nail x="-323" y="-263"/>
+			<nail x="-93" y="-263"/>
+		</transition>
+	</template>
+	<template>
+		<name>Capacity</name>
+		<location id="id5" x="-297" y="-76">
+			<name x="-408" y="-85">Capacity_NA</name>
+		</location>
+		<location id="id6" x="42" y="-76">
+			<name x="76" y="-93">Capacity_Available</name>
+		</location>
+		<init ref="id5"/>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id5"/>
+			<label kind="synchronisation" x="-170" y="34">SwitchAP2P?</label>
+			<nail x="0" y="25"/>
+			<nail x="-238" y="25"/>
+		</transition>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id6"/>
+			<label kind="synchronisation" x="-187" y="-212">SwitchP2AP?</label>
+			<nail x="-246" y="-178"/>
+			<nail x="-17" y="-178"/>
+		</transition>
+	</template>
+	<template>
+		<name>Request</name>
+		<location id="id7" x="-374" y="-93">
+			<name x="-501" y="-102">AperiodicZero</name>
+		</location>
+		<location id="id8" x="0" y="-93">
+			<name x="34" y="-110">AperiodicOne</name>
+		</location>
+		<init ref="id7"/>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id7"/>
+			<label kind="synchronisation" x="-697" y="-102">NochPeriodic?</label>
+			<nail x="-595" y="-187"/>
+			<nail x="-595" y="51"/>
+		</transition>
+		<transition>
+			<source ref="id8"/>
+			<target ref="id7"/>
+			<label kind="synchronisation" x="-229" y="42">SwitchAP2P?</label>
+			<nail x="-59" y="34"/>
+			<nail x="-297" y="34"/>
+		</transition>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id8"/>
+			<label kind="synchronisation" x="-238" y="-255">SwitchP2AP?</label>
+			<nail x="-306" y="-229"/>
+			<nail x="-76" y="-229"/>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+aTask= Task();
+aMode= Mode();
+aCapacity= Capacity();
+aRequest= Request();
+
+// List one or more processes to be composed into a system.
+system aTask, aMode, aCapacity, aRequest;
+    </system>
+	<queries>
+		<query>
+			<formula></formula>
+			<comment></comment>
+		</query>
+	</queries>
+</nta>
